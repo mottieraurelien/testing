@@ -24,13 +24,13 @@ class LoginTest {
         final WebDriver driver = new ChromeDriver(options);
         driver.get("https://practicetestautomation.com/practice-test-login/");
 
-        // [Arrange] Wait for browser to render HTML
+        // [Act] Wait for browser to render HTML, then fill and submit the form
         final WebDriverWait wait = new WebDriverWait(driver, ofSeconds(5));
         wait.until(presenceOfElementLocated(By.name("username"))).sendKeys("student");
         wait.until(presenceOfElementLocated(By.name("password"))).sendKeys("Password123");
         wait.until(presenceOfElementLocated(By.id("submit"))).click();
 
-        // [Assert]
+        // [Assert] The redirection and webpage content
         wait.until(urlToBe("https://practicetestautomation.com/logged-in-successfully/"));
         final WebElement postHeaderH1 = wait.until(presenceOfElementLocated(By.className("post-header")))
                 .findElement(By.className("post-title"));
