@@ -9,7 +9,7 @@
     <groupId>aurelienmottier.testing</groupId>
     <artifactId>testing</artifactId>
     <version>1.0</version>
-    <packaging>pom</packaging>
+    <packaging>jar</packaging>
 
     <!-- Define properties common to all our exercises. -->
     <properties>

@@ -20,7 +20,7 @@ class LoginTest {
 
         // [Arrange] Open browser, maximize and go to website
         final ChromeOptions options = new ChromeOptions();
-        options.addArguments("--incognito", "start-maximized");
+        options.addArguments("--incognito", "start-maximized", "--headless=new");
         final WebDriver driver = new ChromeDriver(options);
         driver.get("https://practicetestautomation.com/practice-test-login/");
 
