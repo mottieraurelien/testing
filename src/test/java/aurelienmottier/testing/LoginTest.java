@@ -20,8 +20,8 @@ public class LoginTest {
     private static WebDriver driver;
     private static WebDriverWait wait;
 
-    @Given("an user navigated to login page")
-    public void an_user_navigated_to_login_page() {
+    @Given("the user navigated to login page")
+    public void given_the_user_navigated_to_login_page() {
         final ChromeOptions options = new ChromeOptions();
         options.addArguments("--incognito", "start-maximized", "--headless=new");
         driver = new ChromeDriver(options);
@@ -35,13 +35,13 @@ public class LoginTest {
         wait.until(presenceOfElementLocated(By.name("password"))).sendKeys("Password123");
     }
 
-    @When("submit the login form")
+    @When("the user submits the login form")
     public void when_the_user_submits_the_login_form() {
         wait.until(presenceOfElementLocated(By.id("submit"))).click();
     }
 
     @Then("the user is forwarded to homepage")
-    public void the_user_is_forwarded_to_homepage() {
+    public void then_the_user_is_forwarded_to_homepage() {
         wait.until(urlToBe("https://practicetestautomation.com/logged-in-successfully/"));
         final WebElement postHeaderH1 = wait.until(presenceOfElementLocated(By.className("post-header")))
                 .findElement(By.className("post-title"));
@@ -49,7 +49,7 @@ public class LoginTest {
     }
 
     @Then("the user closes the browser")
-    public void the_user_closes_the_browser() {
+    public void then_the_user_closes_the_browser() {
         driver.quit();
     }
 
