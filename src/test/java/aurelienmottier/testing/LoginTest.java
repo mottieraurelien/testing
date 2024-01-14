@@ -1,6 +1,8 @@
 package aurelienmottier.testing;
 
-import org.junit.jupiter.api.Test;
+import io.cucumber.java.en.Given;
+import io.cucumber.java.en.Then;
+import io.cucumber.java.en.When;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -13,31 +15,42 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.openqa.selenium.support.ui.ExpectedConditions.presenceOfElementLocated;
 import static org.openqa.selenium.support.ui.ExpectedConditions.urlToBe;
 
-class LoginTest {
+public class LoginTest {
 
-    @Test
-    void should_redirect_to_homepage_when_logging_with_right_credentials() {
+    private static WebDriver driver;
+    private static WebDriverWait wait;
 
-        // [Arrange] Open browser, maximize and go to website
+    @Given("an user navigated to login page")
+    public void an_user_navigated_to_login_page() {
         final ChromeOptions options = new ChromeOptions();
         options.addArguments("--incognito", "start-maximized", "--headless=new");
-        final WebDriver driver = new ChromeDriver(options);
+        driver = new ChromeDriver(options);
         driver.get("https://practicetestautomation.com/practice-test-login/");
+        wait = new WebDriverWait(driver, ofSeconds(10), ofSeconds(1));
+    }
 
-        // [Act] Wait for browser to render HTML, then fill and submit the form
-        final WebDriverWait wait = new WebDriverWait(driver, ofSeconds(5));
-        wait.until(presenceOfElementLocated(By.name("username"))).sendKeys("student");
+    @When("the user inputs a valid username {word} and its password")
+    public void when_the_user_inputs_a_valid_username_and_its_password(final String username) {
+        wait.until(presenceOfElementLocated(By.name("username"))).sendKeys(username);
         wait.until(presenceOfElementLocated(By.name("password"))).sendKeys("Password123");
-        wait.until(presenceOfElementLocated(By.id("submit"))).click();
+    }
 
-        // [Assert] The redirection and webpage content
+    @When("submit the login form")
+    public void when_the_user_submits_the_login_form() {
+        wait.until(presenceOfElementLocated(By.id("submit"))).click();
+    }
+
+    @Then("the user is forwarded to homepage")
+    public void the_user_is_forwarded_to_homepage() {
         wait.until(urlToBe("https://practicetestautomation.com/logged-in-successfully/"));
         final WebElement postHeaderH1 = wait.until(presenceOfElementLocated(By.className("post-header")))
                 .findElement(By.className("post-title"));
         assertThat(postHeaderH1.getText()).isEqualTo("Logged In Successfully");
+    }
 
-        driver.close();
-
+    @Then("the user closes the browser")
+    public void the_user_closes_the_browser() {
+        driver.quit();
     }
 
 }
