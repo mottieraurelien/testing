@@ -1,4 +1,4 @@
-package aurelienmottier.testing;
+package aurelienmottier.testing.features;
 
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
